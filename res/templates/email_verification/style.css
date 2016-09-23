@@ -1,0 +1,31 @@
+body {
+    margin: 20px; 
+    font-size: 20px;
+    font-family: arial, sans-serif;
+}
+.logo{
+	height: 50px;
+}
+.container {
+	width: 800px;
+	margin: 0 auto;
+	padding: 15px;
+	border-radius: 10px;
+	color: #444;
+}
+.header{
+	border:solid thin #eee;
+	border-bottom:solid #ed007a;
+	padding: 30px;
+	background: #FDFDFD;
+
+}
+.content{
+	padding: 30px 20px;
+	border:solid thin #eee;
+	background: #FDFDFD;
+	border-top: 0;
+}
+.bold-text {
+	font-weight: bold;
+}

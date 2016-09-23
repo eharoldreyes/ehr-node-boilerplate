@@ -1,0 +1,1 @@
+sudo apidoc -i controllers/ -o apidoc/

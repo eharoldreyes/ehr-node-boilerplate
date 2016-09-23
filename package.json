@@ -1,0 +1,43 @@
+{
+  "name": "ehr-boilerplate",
+  "version": "0.0.1",
+  "author": "Edgar Harold Reyes",
+  "license": "MIT",
+  "description": "This a description. Wow",
+  "main": "app.js",
+  "private": true,
+  "scripts": {
+    "start": "npm install && nodemon app.js",
+    "docs": "apidoc -i controllers -o apidoc/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eharoldreyes/ehr-boilerplate"
+  },
+  "dependencies": {
+    "apidoc": "^0.16.1",
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
+    "crypto": "0.0.3",
+    "express": "^4.14.0",
+    "file-stream-rotator": "0.0.7",
+    "geolib": "^2.0.21",
+    "helmet": "^2.1.2",
+    "lodash": "^4.16.1",
+    "lorem-ipsum": "^1.0.3",
+    "method-override": "^2.3.6",
+    "moment": "^2.15.0",
+    "morgan": "^1.7.0",
+    "multer": "^1.2.0",
+    "mysql": "^2.11.1",
+    "path": "^0.12.7",
+    "polyline": "^0.2.0",
+    "promise": "^7.1.1",
+    "redis": "^2.6.2",
+    "response-time": "^2.3.1",
+    "s3-uploader": "^2.0.2",
+    "sequelize": "^3.24.3",
+    "streaming-s3": "^0.4.1",
+    "winston": "^2.2.0"
+  }
+}
