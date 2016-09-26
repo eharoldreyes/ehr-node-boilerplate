@@ -1,9 +1,10 @@
-# ehr-node-boilerplate
-
-# Description
+ehr-node-boilerplate
+==================
 The ehr-node-boilerplate boilerplate is designed to simplify any seemingly repetitive code that shows up again and again in order to develop a node backend server application.
-This template contains helpers and libraries for:
 
+
+Features
+---
     Express.js - Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.
         Compression
         helmet
@@ -29,7 +30,7 @@ This template contains helpers and libraries for:
         S3 - data container
         SES - email sending via SMTP or credentials
 
-    Loggers - uses android logging style and saves error log to a file or database.
+    Loggers - uses Android logging style and saves error log to a file or database.
 
     Validator
 
