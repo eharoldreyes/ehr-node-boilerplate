@@ -2,8 +2,8 @@
  * Created by eharoldreyes on 9/22/16.
  */
 'use strict';
-var models = require(__dirname + '/../models');
-var _strings = require(__dirname + '/../res/values/strings');
+const models = require(__dirname + '/../models');
+const _strings = require(__dirname + '/../res/values/strings');
 
 module.exports = {
     authorize,
@@ -22,7 +22,7 @@ function authorize(param) {
         throw new Error("Missing allowed roles");
 
     return function (req, res, next) {
-        exports.authenticate(req.get("Access-Token") || req.headers["Access-Token"]).then(function (user) {
+        authenticate(req.get("Access-Token") || req.headers["Access-Token"]).then(function (user) {
             req.session = {
                 authorized: user !== undefined,
                 user: user
@@ -30,17 +30,15 @@ function authorize(param) {
             if(optns.allowed.contains(user.role))
                 next();
             else
-                res.status(404).send({error:true, message: "Page not found"}).end();
-        }).catch(function (error) {
-            res.status(403).send({error:true, message: "Forbidden: " + error.message || "Invalid token", error_log: error}).end();
-        });
+                throw new Error("PAGE_NOT_FOUND");
+        }).catch(next);
     };
 }
 
 function authenticate(accessToken) {
     return models.Users.findOne({where: {$or: [{token: accessToken}, {web_token: accessToken}]}}).then(function (user) {
         if (!user)
-            throw new Error("User not found");
+            throw new Error("NO_RECORD_FOUND");
         return user;
     });
 }

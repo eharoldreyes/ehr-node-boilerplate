@@ -19,7 +19,7 @@ module.exports = (router) => {
     //router.put(     "/change/password"				        , $({allowAll:true}), __.users.updatePassword);
 
     router.get("/test", (req, res) =>{
-        res.status(200).send({message:"Killed"});
+        res.status(200).send({message:"test"});
     });
 
     router.get("/kill", (req, res) =>{
@@ -27,8 +27,8 @@ module.exports = (router) => {
         process.exit(0);
     });
 
-    router.all(		"*", (req, res) =>  {
-        res.status(404).send({error: true, message : "Page not found."});
+    router.all("*", (req, res, next) =>  {
+        return next(new Error("PAGE_NOT_FOUND"));
     });
 
     return router;

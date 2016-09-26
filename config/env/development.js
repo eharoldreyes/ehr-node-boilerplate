@@ -13,7 +13,7 @@ module.exports = {
 
     MYSQL: {
         "use_env_variable":false,
-        "database": "dbname",
+        "database": "cu_dev",
         "dialect": "mysql",
         "port": 3306,
         "logging": console.log, // or false

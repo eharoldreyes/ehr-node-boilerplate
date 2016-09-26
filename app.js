@@ -29,6 +29,7 @@ const spawnServer   = () => {
 
     app.use('/documentation', express.static(__dirname + '/apidoc'));
     app.use(routes(express.Router()));
+    app.use(require(__dirname + "/controllers/error_handler"));
     app.listen(config.PORT, () => {
         Log.d('Starting', `${config.APP_NAME} at Environment ${config.ENV}`);
     });
