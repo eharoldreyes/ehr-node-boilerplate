@@ -3,35 +3,35 @@
 # Description
 The ehr-node-boilerplate boilerplate is designed to simplify any seemingly repetitive code that shows up again and again in order to develop a node backend server application.
 This template contains helpers and libraries for:
-```
-Express.js - Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.
-    Compression
-    helmet
-    Clustering - Auto-respawn
-    Error Handling
-    Documentation - apiDocs.js
+    Express.js - Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.
+        Compression
+        helmet
+        Clustering - Auto-respawn
+        Error Handling
+        Documentation - apiDocs.js
 
-Sequelize - a promise-based ORM for Node.js and io.js. It supports the dialects PostgreSQL, MySQL, MariaDB, SQLite and MSSQL and features solid transaction support, relations, read replication and more.
-    Models
-    Migration - seemingly make or undo a change in the database.
+    Sequelize - a promise-based ORM for Node.js and io.js. It supports the dialects PostgreSQL, MySQL, MariaDB, SQLite and MSSQL and features solid transaction support, relations, read replication and more.
+        Models
+        Migration - seemingly make or undo a change in the database.
 
-Promise - handles any exception (both explicit and implicit) in asynchronous code blocks that use then(). Just add .catch(next) to the end of promise chains.
+    Promise - handles any exception (both explicit and implicit) in asynchronous code blocks that use then(). Just add .catch(next) to the end of promise chains.
 
-Redis- an open source (BSD licensed), in-memory data structure store, used as database, cache and message broker. It supports data structures such as strings, hashes, lists, sets, sorted sets.
+    Redis- an open source (BSD licensed), in-memory data structure store, used as database, cache and message broker. It supports data structures such as strings, hashes, lists, sets, sorted sets.
 
-Session
-    JWT.io - industry standard RFC 7519 method for representing claims securely between two parties. Allows you to decode, verify and generate JWT.
+    Session
+        JWT.io - industry standard RFC 7519 method for representing claims securely between two parties. Allows you to decode, verify and generate JWT.
 
-Socket.IO - enables real-time bidirectional event-based communication.
-    Clustering
+    Socket.IO - enables real-time bidirectional event-based communication.
+        Clustering
 
-AWS
-    S3 - data container
-    SES - email sending via SMTP or credentials
-Validators
-Loggers - uses android logging style and saves error log to a file.
+    AWS
+        S3 - data container
+        SES - email sending via SMTP or credentials
 
-```
+    Loggers - uses android logging style and saves error log to a file or database.
+
+    Validator
+
 
 Requirements
 -----
