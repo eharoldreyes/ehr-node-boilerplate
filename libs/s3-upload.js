@@ -4,26 +4,26 @@
  * Phone: +639234353163
  * Skype: eharoldreyes
  */
-var config    		= require(__dirname + '/../config/config').AWS.s3;
-var utils    		= require(__dirname + '/../helpers/utils');
-var Upload          = require('s3-uploader');
-var streamingS3     = require('streaming-s3');
-var fs              = require('fs');
-var Promise         = require('promise');
+const config = require(__dirname + '/../config/config').AWS.s3;
+const utils = require(__dirname + '/../helpers/utils');
+const Upload = require('s3-uploader');
+const streamingS3 = require('streaming-s3');
+const fs = require('fs');
+const Promise = require('promise');
 
 exports.s3UploadImage = function (file, folder, callback) {
     return new Promise(function (resolve, reject) {
         var client = new Upload(config.bucket, {
             aws: {
-                path: 'images/' + folder + "/",
+                path: folder,
                 region: config.region,
                 accessKeyId: config.access_key_id,
                 secretAccessKey: config.secret_access_key,
                 acl: 'public-read',
                 httpOptions: {
-                    timeout:60000
+                    timeout: 60000
                 },
-                maxRetries:3
+                maxRetries: 3
             },
             cleanup: {
                 versions: true,
@@ -33,13 +33,13 @@ exports.s3UploadImage = function (file, folder, callback) {
                 maxHeight: 720,
                 maxWidth: 720,
                 suffix: '-large'
-            },{
+            }, {
                 maxHeight: 100,
                 aspect: '1:1',
                 suffix: '-thumb'
             }]
         });
-        client.upload(file.path, {}, (err, uploads, meta) =>  {
+        client.upload(file.path, {}, (err, uploads, meta) => {
             fs.unlink(file.path, function () {
                 if (err) {
                     err.from = "image.js:client.upload()";
@@ -49,7 +49,8 @@ exports.s3UploadImage = function (file, folder, callback) {
                 } else {
                     var uploaded = {
                         urlLarge: uploads[0].url,
-                        urlThumb: uploads[1].url
+                        urlThumb: uploads[1].url,
+                        meta:meta
                     };
                     resolve(uploaded);
                     if (callback)
@@ -60,7 +61,7 @@ exports.s3UploadImage = function (file, folder, callback) {
     });
 };
 
-exports.s3StreamFile = function (file, callback) {
+exports.s3StreamFile = function (file, uploadDir, callback) {
     return new Promise(function (resolve, reject) {
         var filePath = file.path;
         var fStream = fs.createReadStream(filePath);
@@ -70,20 +71,23 @@ exports.s3StreamFile = function (file, callback) {
         };
         var options = {
             Bucket: config.bucket,
-            Key: "builds/" + file.filename,
+            Key: uploadDir + file.filename,
             ContentType: file.mimetype,
             ACL: "public-read"
         };
         var uploader = new streamingS3(fStream, cgf, options);
         uploader.on('finished', function (res, stats) {
             fs.unlink(filePath, function (error) {
-                if(error) {
+                if (error) {
                     reject(error);
-                    if(callback) callback(error);
+                    if (callback) callback(error);
                 } else {
-                    var s = {url:"https://" + config.bucket + ".s3.amazonaws.com/" + res.Key, mimetype: file.mimetype};
+                    const s = {
+                        url: "https://" + config.bucket + ".s3.amazonaws.com/" + res.Key,
+                        mimetype: file.mimetype
+                    };
                     resolve(s);
-                    if(callback) callback(undefined, s);
+                    if (callback) callback(undefined, s);
                 }
             });
         });
@@ -91,7 +95,7 @@ exports.s3StreamFile = function (file, callback) {
             fs.unlink(filePath, function () {
                 error.from = "image.js:s3StreamVideo()";
                 reject(error);
-                if(callback) callback(error);
+                if (callback) callback(error);
             });
         });
         uploader.begin();
