@@ -11,7 +11,7 @@ const $             = __.authorization.authorize;
 module.exports = (router) => {
     router.all(		"*"								        , logRequest);
 
-    //router.post(    "/login"					            , __.users.login);
+    router.post(    "/login"					            , __.users.login);
     //router.get(     "/verify/:token"				        , __.users.verify);
     //router.post(    "/logout"						        , $({allowAll:true}), __.users.logout);
     //router.post(    "/forgot"						        , __.users.forgotPassword);

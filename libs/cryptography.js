@@ -1,6 +1,7 @@
 'use strict';
 
 const crypto = require('crypto');
+const Promise = require('promise');
 const config = require(__dirname + '/../config/config');
 
 module.exports = {
@@ -16,18 +17,27 @@ function hash(string, length, iterations) {
 }
 
 function encrypt(data, callback) => {
-    const cipher = crypto.createCipher(config.ENCRYPT, config.SALT);
-    let encrypted = cipher.update(data, 'utf8', 'hex');
-    encrypted += cipher.final('hex');
-    callback(encrypted);
+    return new Promise(function (resolve) {
+        const cipher = crypto.createCipher(config.ENCRYPT, config.SALT);
+        let encrypted = cipher.update(data, 'utf8', 'hex');
+        encrypted += cipher.final('hex');
+        if(callback)
+            callback(encrypted);
+        resolve(encrypted)
+    });
 }
 
 function decrypt(data, callback) => {
-    const decipher = crypto.createDecipher(config.ENCRYPT, config.SALT);
-    let decrypted = decipher.update(data, 'hex', 'utf8');
-    decrypted += decipher.final('utf8');
-    decrypted = JSON.parse(decrypted);
-    callback(decrypted);
+    return new Promise(function (resolve) {
+        const decipher = crypto.createDecipher(config.ENCRYPT, config.SALT);
+        let decrypted = decipher.update(data, 'hex', 'utf8');
+        decrypted += decipher.final('utf8');
+        decrypted = JSON.parse(decrypted);
+        if(callback)
+            callback(decrypted);
+        resolve(decrypted)
+    });
+
 }
 
 function encryptSync(data) => {

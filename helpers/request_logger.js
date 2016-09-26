@@ -3,11 +3,17 @@
  */
 'use strict';
 module.exports = (req, res, next) => {
-    Log.d("Agent", req.get("User-Agent"));
-    Log.d("Address", req.headers["x-forwarded-for"] || req.connection["remoteAddress"]);
-    Log.d("Method", req.method);
-    Log.d("Params", req.params);
-    Log.d("Query", req.query);
-    Log.d("Body", req.body);
+    Log.d(req.params["0"], {
+        method:req.method,
+        agent:req.get("User-Agent"),
+        address:req.headers["x-forwarded-for"] || req.connection["remoteAddress"]
+    });
+    if(Object.keys(req.params).length > 0)
+        Log.d("Params", req.params);
+    if(Object.keys(req.query).length > 0)
+        Log.d("Query", req.query);
+    if(req.method !== "GET")
+        Log.d("Body", req.body);
+
     next();
 };
