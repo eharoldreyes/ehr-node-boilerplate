@@ -14,11 +14,6 @@ module.exports = {
     decodePolyline,
     distanceBetweenPoints,
 
-    //HASH
-    decrypt,
-    encrypt,
-    hash,
-
     //RANDOM
     randomString,
     randomHash,
@@ -75,20 +70,6 @@ function distanceBetweenPoints(latLngPair1, latLngPair2) { //returns value in me
     });
 }
 
-function decrypt(text, secret, algo) {
-    const decipher = crypto.createDecipher(algo || 'aes-256-ctr', secret);
-    let dec = decipher.update(text, 'hex', 'utf8');
-    dec += decipher.final('utf8');
-    return dec;
-}
-
-function encrypt(text, secret, algo) {
-    const cipher = crypto.createCipher(algo || 'aes-256-ctr', secret);
-    let crypted = cipher.update(text, 'utf8', 'hex');
-    crypted += cipher.final('hex');
-    return crypted;
-}
-
 function toTitleCase(str) {
     return str ? str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()) : '';
 }
@@ -109,13 +90,6 @@ function toDay(str) {
         .replace(/Thurs|Th/g, "H")
         .replace("Fri", "F")
         .replace("Sat", "S");
-}
-
-function hash(string, hash) {
-    const salt = hash || 'sha1';
-    const iterations = 5000;
-    const keylen = 64;
-    return new Buffer(crypto.pbkdf2Sync(string, salt, iterations, keylen), 'binary').toString('base64');
 }
 
 function toBase64(string) {
