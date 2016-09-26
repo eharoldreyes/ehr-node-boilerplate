@@ -26,13 +26,9 @@ exports.encryptSync = (data) => {
 
     if (typeof data === 'object') {
         data = JSON.stringify(data);
-    }
-
-    else if (typeof data === 'number') {
+    } else if (typeof data === 'number') {
         data = data.toString();
-    }
-
-    else if (typeof data !== 'string') {
+    } else if (typeof data !== 'string') {
         throw new TypeError('Data must be object or number');
     }
 

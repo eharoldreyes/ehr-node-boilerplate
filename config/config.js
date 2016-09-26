@@ -10,11 +10,11 @@ const config = {
 
     PORT: 3000,
 
-    CLUSTERED: true,
+    CLUSTERED: process.env.NODE_CLUSTERED || true,
 
     HASH:{
         SALT: 'NaCl',
-        SECRET: 's0m3th1ng',
+        SECRET: 'itss0m3th1ng',
         ENCRYPT: 'aes192'
     },
 

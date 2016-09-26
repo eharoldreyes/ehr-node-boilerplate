@@ -5,6 +5,11 @@
 
 module.exports = function (sequelize, DataTypes) {
     var User = sequelize.define("user", {
+        id: {
+            type: DataTypes.UUID,
+            primaryKey: true,
+            defaultValue:DataTypes.UUIDV1
+        },
         email: {
             type: DataTypes.STRING(256),
             allowNull: false,
@@ -49,7 +54,11 @@ module.exports = function (sequelize, DataTypes) {
         timestamps: true,
         classMethods: {
             associate: function (models) {
-
+                //User.belongsTo(models.delivery, {
+                //    onDelete: "CASCADE",
+                //    as: "Delivery",
+                //    foreignKey: "delivery_id"
+                //});
             }
         }
     });

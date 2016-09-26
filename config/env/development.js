@@ -9,7 +9,10 @@ module.exports = {
         allowed_methods: 'GET, POST, PUT, OPTIONS, DELETE'
     },
 
-    //WARNING: Do not save production configuration variables here
+    /*
+    WARNING:
+    Do not save production configuration variables here
+     */
 
     MYSQL: {
         "use_env_variable":false,
