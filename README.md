@@ -3,6 +3,7 @@
 # Description
 The ehr-node-boilerplate boilerplate is designed to simplify any seemingly repetitive code that shows up again and again in order to develop a node backend server application.
 This template contains helpers and libraries for:
+
     Express.js - Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.
         Compression
         helmet
