@@ -91,7 +91,7 @@ function authorize(param) {
             if(optns.allowed.contains(user.role))
                 next();
             else
-                throw new Error("PAGE_NOT_FOUND");
+                throw new Error("FORBIDDEN");
         }).catch(next);
     };
 }

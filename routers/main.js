@@ -19,11 +19,11 @@ module.exports = (router) => {
     //router.put(     "/change/password"				        , $({allowAll:true}), __.users.updatePassword);
 
     router.get("/test", (req, res) =>{
-        res.status(200).send({message:"test"});
+        res.status(200).send({error: false, message:"test"});
     });
 
     router.get("/kill", (req, res) =>{
-        res.status(200).send({message:"Killed"});
+        res.status(200).send({error: false, message:"Killed"});
         process.exit(0);
     });
 
