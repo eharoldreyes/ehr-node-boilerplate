@@ -1,12 +1,12 @@
 'use strict';
 
 const config        = require(__dirname + '/config/config');
-const cors          = require(__dirname + "/libs/cors");
 const utils         = require(__dirname + '/helpers/utils');
 const override      = require(__dirname + "/helpers/override");
-const models        = require(__dirname + "/models");
-const routes        = require(__dirname + "/routers/main");
+const cors          = require(__dirname + "/libs/cors");
 const Log           = require(__dirname + "/libs/Log");
+const routes        = require(__dirname + "/routers/main");
+const models        = require(__dirname + "/models");
 const express       = require("express");
 const cluster       = require('cluster');
 const bodyParser    = require("body-parser");
