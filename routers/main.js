@@ -12,8 +12,8 @@ module.exports = (router) => {
     router.all(		"*"								        , logRequest);
 
     router.post(    "/login"					            , __.users.login);
+    router.post(    "/logout"						        , $({allowAll:true}), __.users.logout);
     //router.get(     "/verify/:token"				        , __.users.verify);
-    //router.post(    "/logout"						        , $({allowAll:true}), __.users.logout);
     //router.post(    "/forgot"						        , __.users.forgotPassword);
     //router.put(     "/password/:token"				        , __.users.resetPassword);
     //router.put(     "/change/password"				        , $({allowAll:true}), __.users.updatePassword);

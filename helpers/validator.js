@@ -15,7 +15,8 @@ module.exports = {
     checkRequiredFields,
     checkArrayRequiredFields,
     containsMultipleValue,
-    containsSpecialChar
+    containsSpecialChar,
+    getData
 };
 
 function isMissing(str) {
@@ -108,4 +109,60 @@ function containsSpecialChar(str) {
             return true;
     }
     return false;
+}
+
+function getData(source, sample, ref){
+    return new Promise((resolve, reject) => {
+        const final = {};
+        let hasError = false,
+            temp;
+        if (typeof sample !== typeof source || (Array.isArray(sample) !== Array.isArray(source)))
+            reject(new Error('Sample-Source type mismatch'));
+        if (Array.isArray(sample)) {
+            temp = source.map((a, index) => {
+                const ret = _validatePrimitiveValues(sample, 0, source, index, ref + `[${index}]`);
+                hasError = ret instanceof Error ? ret : false;
+                return ret;
+            });
+            return hasError ? hasError : temp;
+        }
+        for (let prop in sample) {
+            if (sample.hasOwnProperty(prop)) {
+                let source_prop = prop,
+                    data;
+                if (prop[0] === '_')
+                    source_prop = prop.slice(1);
+                data = _validatePrimitiveValues(sample, prop, source, source_prop, (ref ? ref + '.' : '') + prop);
+                if (data instanceof Error)
+                    reject(data);
+                if (typeof data !== 'undefined')
+                    final[source_prop] = data;
+            }
+        }
+        resolve(final);
+    });
+}
+
+function _validatePrimitiveValues(sample, prop, source, source_prop, ref) {
+    let source_type = typeof source[source_prop];
+    const type = typeof sample[prop];
+
+    if (type === 'string' && sample[prop]) {
+        source_type = type;
+        source[source_prop] = sample[prop];
+    }
+
+    if ((source_type === 'undefined' && prop[0] !== '_') || (source_type === 'string' && !source[source_prop])){
+        let err = new Error("INC_DATA");
+        err.desc = ref + ' is missing';
+        return err;
+    }
+    if (source_type !== 'undefined' && source_type !== type) {
+        let err = new Error("INV_DATA");
+        err.desc = ref + ' invalid type';
+        return err;
+    }
+    if (type === 'object')
+        return getData(sample[prop], source[source_prop], ref);
+    return source[source_prop];
 }

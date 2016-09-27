@@ -18,6 +18,10 @@ module.exports = {
         code: 400,
         message: 'String contains invalid character'
     },
+    INV_DATA: {
+        code: 400,
+        message: 'Invalid request data'
+    },
     INC_DATA: {
         code: 400,
         message: 'Incomplete request data'
@@ -51,11 +55,11 @@ module.exports = {
         message: 'No record was deleted'
     },
     NO_RECORD_FOUND: {
-        code: 204,
+        code: 400,
         message: 'No record was found'
     },
     LOGIN_FAILED: {
-        code: 204,
+        code: 400,
         message: 'Unable to login'
     },
     DUP_ENTRY: {

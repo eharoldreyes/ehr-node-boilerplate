@@ -14,6 +14,7 @@ module.exports = (err, req, res, next) => {
     res.status(ERROR.code).send({
         error: true,
         message: ERROR.message || err.message,
-        error_log: (process.env.NODE_ENV !== 'production' || ERROR.code === 500) ? err.stack : undefined
+        error_desc: err.desc,
+        error_log: (ERROR.code === 500) ? err.stack : undefined //process.env.NODE_ENV !== 'production' ||
     });
 };

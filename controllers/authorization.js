@@ -17,7 +17,8 @@ module.exports = {
 
 function authorize(param) {
     return function (req, res, next) {
-        validateToken(req.get("x-access-token") || req.headers["x-access-token"]).then(user => {
+        const token = req.get("x-access-token") || req.headers["x-access-token"];
+        validateToken(token).then(user => {
             const optns = { allowAll: false, allowed: []};
             if (Array.isArray(param))
                 optns.allowed = param;
@@ -31,7 +32,8 @@ function authorize(param) {
                 throw new Error("FORBIDDEN");
             req.session = {
                 authorized: user !== undefined,
-                user: user
+                user: user,
+                token: token
             };
             next();
         }).catch(next);
