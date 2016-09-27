@@ -1,1 +1,1 @@
-sudo apidoc -i controllers/ -o apidoc/
+sudo apidoc -i controllers/ -o documentation/

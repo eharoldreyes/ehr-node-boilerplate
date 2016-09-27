@@ -27,7 +27,7 @@ const spawnServer   = () => {
     app.use(bodyParser.json());
     app.use(require('compression')());
 
-    app.use('/documentation', express.static(__dirname + '/apidoc'));
+    app.use('/documentation', express.static(__dirname + '/documentation'));
     app.use(routes(express.Router()));
     app.use(require(__dirname + "/controllers/error_handler"));
     app.listen(config.PORT, () => {

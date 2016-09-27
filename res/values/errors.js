@@ -56,7 +56,7 @@ module.exports = {
     },
     LOGIN_FAILED: {
         code: 204,
-        message: 'Unable to login.'
+        message: 'Unable to login'
     },
     DUP_ENTRY: {
         code: 409,

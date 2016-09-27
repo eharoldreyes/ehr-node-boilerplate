@@ -4,7 +4,7 @@
 'use strict';
 
 const logRequest    = require(__dirname + '/../helpers/request_logger');
-const __            = require(__dirname + '/../libs/importer').dirloadSync(__dirname + '/../controllers');
+const __            = require(__dirname + '/../controllers');
 const upload        = require(__dirname + '/../libs/multer');
 const $             = __.authorization.authorize;
 
