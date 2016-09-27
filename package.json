@@ -23,6 +23,7 @@
     "file-stream-rotator": "0.0.7",
     "geolib": "^2.0.21",
     "helmet": "^2.1.2",
+    "jsonwebtoken": "^7.1.9",
     "lodash": "^4.16.1",
     "lorem-ipsum": "^1.0.3",
     "method-override": "^2.3.6",

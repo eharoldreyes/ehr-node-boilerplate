@@ -1,6 +1,7 @@
 /**
  * Created by eharoldreyes on 6/15/16.
  */
+'use strict';
 const Promise = require("promise");
 const redis = require("redis");
 let client;
@@ -9,8 +10,8 @@ module.exports = function (config) {
     client = redis.createClient(config);
     return {
         //Default
-        set,
-        get,
+        set:set,
+        get:get,
 
         //Hash
         createHash,
@@ -38,9 +39,8 @@ module.exports = function (config) {
     };
 };
 
-
 function handleReply(resolve, reject, callback) {
-    return function(err, reply) {
+    return (err, reply) => {
         if(err){
             reject(err);
             if(callback) callback(err);
@@ -129,13 +129,15 @@ function addSetMember(key, member, callback) {
 
 function isSetMember(key, member, callback){
     return new Promise((resolve, reject) =>{
-        client.sismember(key, member, (err, isMember) => {
-            if(callback)
-                callback(err, isMember);
-            if(err)
+        client.sismember(key, member, function(err, reply) {
+            if(err){
                 reject(err);
-            else
-                resolve(isMember);
+                if(callback) callback(err);
+            } else {
+                var bool = reply === 1;
+                resolve(bool);
+                if(callback) callback(undefined, bool);
+            }
         });
     });
 }

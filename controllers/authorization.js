@@ -3,7 +3,8 @@
  */
 'use strict';
 const redis         = require(__dirname + '/../libs/redis-helper');
-const _strings      = require(__dirname + '/../res/values/strings');
+const crypto        = require(__dirname + '/../libs/cryptography');
+const strings      = require(__dirname + '/../res/values/strings');
 const config        = require(__dirname + '/../config/config');
 const jwt           = require('jsonwebtoken');
 const Promise       = require('promise');
@@ -23,18 +24,16 @@ function authorize(param) {
             else
                 optns.allowAll = param.allowAll || false;
             if (optns.allowAll)
-                optns.allowed = [_strings.ADMIN, _strings.PROGRAMMER];
+                optns.allowed = [strings.ADMIN, strings.PROGRAMMER];
             if (optns.allowAll && (optns.allowed === undefined || optns.allowed.length === 0))
                 throw new Error("Missing allowed roles");
-
+            if(!optns.allowed.contains(user.role))
+                throw new Error("FORBIDDEN");
             req.session = {
                 authorized: user !== undefined,
                 user: user
             };
-            if(optns.allowed.contains(user.role))
-                next();
-            else
-                throw new Error("FORBIDDEN");
+            next();
         }).catch(next);
     };
 }
@@ -54,17 +53,19 @@ function createToken(user){
 
 function validateToken(token) {
     return new Promise((resolve, reject) => {
-        jwt.verify(token, config.SECRET, {algorithms : [config.TOKEN.ALGO]}, (err, user) => {
+        jwt.verify(token, config.SECRET, {algorithms: [config.TOKEN.ALGO]}, (err, user) => {
             if (err)
                 reject(err);
             else
                 resolve(user);
         });
-    }).then(user => {
+    }).then(function (user) {
         if (!user)
             throw new Error("FORBIDDEN");
+        return crypto.decrypt(user);
+    }).then((user) => {
         return redis.isSetMember(`jwt_${user.id}`, token).then(isMember => {
-            if(!isMember)
+            if (!isMember)
                 throw new Error("FORBIDDEN");
             return user;
         });

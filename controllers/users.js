@@ -25,7 +25,7 @@ function login(req, res, next) {
     };
     return User.findOne(query).then(user => {
         if(!user)
-            throw new Error("NO_RECORD_FOUND");
+            throw new Error("LOGIN_FAILED");
 
         return Auth.createToken(user).then(token => {
             delete user.password;

@@ -54,6 +54,10 @@ module.exports = {
         code: 204,
         message: 'No record was found'
     },
+    LOGIN_FAILED: {
+        code: 204,
+        message: 'Unable to login.'
+    },
     DUP_ENTRY: {
         code: 409,
         message: 'Duplicate insert entry'
