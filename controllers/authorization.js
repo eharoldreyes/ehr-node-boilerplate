@@ -2,27 +2,31 @@
  * Created by eharoldreyes on 9/22/16.
  */
 'use strict';
-const models = require(__dirname + '/../models');
-const _strings = require(__dirname + '/../res/values/strings');
+const redis         = require(__dirname + '/../libs/redis-helper');
+const _strings      = require(__dirname + '/../res/values/strings');
+const config        = require(__dirname + '/../config/config');
+const jwt           = require('jsonwebtoken');
+const Promise       = require('promise');
 
 module.exports = {
     authorize,
-    authenticate
+    createToken,
+    validateToken
 };
 
 function authorize(param) {
-    var optns = { allowAll: false, allowed: []};
-    if (Array.isArray(param))
-        optns.allowed = param;
-    else
-        optns.allowAll = param.allowAll || false;
-    if (optns.allowAll)
-        optns.allowed = [_strings.ADMIN, _strings.PROGRAMMER];
-    if (optns.allowAll && (optns.allowed === undefined || optns.allowed.length === 0))
-        throw new Error("Missing allowed roles");
-
     return function (req, res, next) {
-        authenticate(req.get("Access-Token") || req.headers["Access-Token"]).then(function (user) {
+        validateToken(req.get("x-access-token") || req.headers["x-access-token"]).then(user => {
+            const optns = { allowAll: false, allowed: []};
+            if (Array.isArray(param))
+                optns.allowed = param;
+            else
+                optns.allowAll = param.allowAll || false;
+            if (optns.allowAll)
+                optns.allowed = [_strings.ADMIN, _strings.PROGRAMMER];
+            if (optns.allowAll && (optns.allowed === undefined || optns.allowed.length === 0))
+                throw new Error("Missing allowed roles");
+
             req.session = {
                 authorized: user !== undefined,
                 user: user
@@ -35,10 +39,34 @@ function authorize(param) {
     };
 }
 
-function authenticate(accessToken) {
-    return models.Users.findOne({where: {$or: [{token: accessToken}, {web_token: accessToken}]}}).then(function (user) {
+function createToken(user){
+    return crypto.encrypt(user.dataValues || user).then(encrypted =>  {
+        return jwt.sign(encrypted, config.SECRET, {
+            algorithm: config.TOKEN.ALGO,
+            expiresIn: config.TOKEN.EXPIRATION
+        }).then(token =>  {
+            return redis.set(`jwt_${user.id}`, token).then(() => {
+                return token;
+            });
+        });
+    });
+}
+
+function validateToken(token) {
+    return new Promise((resolve, reject) => {
+        jwt.verify(token, config.SECRET, {algorithms : [config.TOKEN.ALGO]}, (err, user) => {
+            if (err)
+                reject(err);
+            else
+                resolve(user);
+        });
+    }).then(user => {
         if (!user)
-            throw new Error("NO_RECORD_FOUND");
-        return user;
+            throw new Error("FORBIDDEN");
+        return redis.isSetMember(`jwt_${user.id}`, token).then(isMember => {
+            if(!isMember)
+                throw new Error("FORBIDDEN");
+            return user;
+        });
     });
 }

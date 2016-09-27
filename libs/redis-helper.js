@@ -28,6 +28,7 @@ module.exports = function (config) {
         createSet,
         addSetMember,
         addSetMembers,
+        isSetMember,
         getSetMembers,
         removeSetMember,
 
@@ -126,8 +127,21 @@ function addSetMember(key, member, callback) {
     return self.addSetMembers(key, [member], callback);
 }
 
+function isSetMember(key, member, callback){
+    return new Promise((resolve, reject) =>{
+        client.sismember(key, member, (err, isMember) => {
+            if(callback)
+                callback(err, isMember);
+            if(err)
+                reject(err);
+            else
+                resolve(isMember);
+        });
+    });
+}
+
 function addSetMembers(key, members, callback) {
-    return self.getSetMembers(key).then(function (array) {
+    return client.getSetMembers(key).then(function (array) {
         if(!array) array = [];
         members.forEach(function (member) {
             if(!array.contains(member)) array.push(member);

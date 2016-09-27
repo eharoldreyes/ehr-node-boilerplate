@@ -51,12 +51,8 @@ module.exports = {
         message: 'No record was deleted'
     },
     NO_RECORD_FOUND: {
-        code: 400,
-        message: 'No record was found'
-    },
-    ZERO_RES: {
         code: 204,
-        message: 'Database returned no result'
+        message: 'No record was found'
     },
     DUP_ENTRY: {
         code: 409,
