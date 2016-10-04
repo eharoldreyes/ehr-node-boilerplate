@@ -43,14 +43,10 @@ describe("Super Admin", function () {
             if (result.body.error){
                 console.log("result.body", result.body);
             } else {
-                user.access_token = result.body.user.access_token;
+                user.access_token = result.header["x-access-token"];
                 GLOBAL.save();
             }
-
-            console.log(result);
-
             expect(result.body.error).to.eql(false);
-            expect(err).to.eql(null);
         });
     });
 });
