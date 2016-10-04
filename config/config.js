@@ -6,11 +6,11 @@ const path = require('path');
 const config = {
     APP_NAME: 'App name',
 
-    FRONTEND_URL: 'appname.loc',
+    FRONTEND_URL: 'localhost',
 
     PORT: 3000,
 
-    CLUSTERED: process.env.NODE_CLUSTERED || true,
+    CLUSTERED: process.env.NODE_CLUSTERED || false,
 
     HASH:{
         SALT: 'NaCl',

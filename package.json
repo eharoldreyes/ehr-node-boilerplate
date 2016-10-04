@@ -8,6 +8,7 @@
   "private": true,
   "scripts": {
     "start": "npm install && nodemon app.js",
+    "test": "npm install && export NODE_ENV=development && ./node_modules/.bin/mocha --reporter spec && export NODE_ENV=development",
     "docs": "apidoc -i controllers -o apidoc/"
   },
   "repository": {
@@ -19,6 +20,7 @@
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
     "crypto": "0.0.3",
+    "expect.js": "^0.3.1",
     "express": "^4.14.0",
     "file-stream-rotator": "0.0.7",
     "geolib": "^2.0.21",
@@ -27,6 +29,7 @@
     "lodash": "^4.16.1",
     "lorem-ipsum": "^1.0.3",
     "method-override": "^2.3.6",
+    "mocha": "^3.1.0",
     "moment": "^2.15.0",
     "morgan": "^1.7.0",
     "multer": "^1.2.0",
@@ -39,6 +42,7 @@
     "s3-uploader": "^2.0.2",
     "sequelize": "^3.24.3",
     "streaming-s3": "^0.4.1",
+    "superagent": "^2.3.0",
     "winston": "^2.2.0"
   }
 }

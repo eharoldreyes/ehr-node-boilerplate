@@ -3,6 +3,10 @@
  */
 
 module.exports = {
+    SequelizeValidationError: {
+        code: 400,
+        message: 'Invalid request data'
+    },
     INTERNAL_SERVER_ERROR: {
         code: 500
     },

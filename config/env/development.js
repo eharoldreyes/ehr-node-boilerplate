@@ -20,7 +20,7 @@ module.exports = {
         "dialect": "mysql",
         "port": 3306,
         "logging": console.log, // or false
-        "sync": false,
+        "sync": true,
 
         //Single
         "host": "127.0.0.1",

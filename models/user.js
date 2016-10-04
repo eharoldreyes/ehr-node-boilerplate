@@ -34,6 +34,10 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(128),
             allowNull: false
         },
+        phone: {
+            type: DataTypes.STRING(16),
+            allowNull: false
+        },
         sss: {
             type: DataTypes.STRING(12),
             allowNull: true

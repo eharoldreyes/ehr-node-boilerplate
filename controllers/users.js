@@ -55,12 +55,14 @@ function register(req, res, next){
         firstName:"text",
         middleName:"text",
         lastName:"text",
+        phone:"text",
         _sss:"text",
         _birthday:"text",
         _points:0,
         _isActive:false,
         _hiredAt:"date"
     }).then(user => {
+        console.log("shgit",user);
         return User.create(user);
     }).then(user => {
         res.status(200).send({error:false, message: "Registered", user:user});

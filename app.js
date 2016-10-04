@@ -31,14 +31,14 @@ const spawnServer   = () => {
     app.use(routes(express.Router()));
     app.use(require(__dirname + "/controllers/error_handler"));
     app.listen(config.PORT, () => {
-        Log.d('Starting', `${config.APP_NAME} at Environment ${config.ENV}`);
+        Log.i('Starting', `${config.APP_NAME} at Environment ${config.ENV}`);
     });
 
     return app;
 };
 
 module.exports = models.sequelize.sync({force: models.config.sync}).then(() => {
-    Log.d('Initializing', `${config.APP_NAME} at port ${config.PORT}`);
+    Log.i('Initializing', `${config.APP_NAME} at port ${config.PORT}`);
 
     if(!config.CLUSTERED)
         return spawnServer();

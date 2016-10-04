@@ -124,7 +124,10 @@ function getData(source, sample, ref){
                 hasError = ret instanceof Error ? ret : false;
                 return ret;
             });
-            return hasError ? hasError : temp;
+            if(hasError)
+                reject(hasError)
+            else
+                resolve(temp);
         }
         for (let prop in sample) {
             if (sample.hasOwnProperty(prop)) {
