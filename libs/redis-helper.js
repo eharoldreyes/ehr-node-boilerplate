@@ -54,7 +54,7 @@ function handleReply(resolve, reject, callback) {
 //Value Pair
 function set(key, value, callback, overwrite) {
     return new Promise(function (resolve, reject) {
-        self.exists(key).then(function (exists) {
+        exists(key).then(function (exists) {
             if(exists && !overwrite){
                 reject({error:true, message: "Key already exists."});
             } else {
@@ -85,11 +85,11 @@ function getHash(key, callback) {
 
 //List
 function createList(key, array, callback) {
-    return self.pushListRight(key, array, callback);
+    return pushListRight(key, array, callback);
 }
 
 function addList(key, object, callback) {
-    return self.pushListRight(key, [object], callback);
+    return pushListRight(key, [object], callback);
 }
 
 function pushListRight(key, array, callback) {
@@ -107,7 +107,7 @@ function pushListLeft(key, array, callback) {
 }
 
 function getListValues(key, callback) {
-    return self.getListRange(key, 0, -1, callback);
+    return getListRange(key, 0, -1, callback);
 }
 
 function getListRange(key, from, to, callback) {
@@ -124,7 +124,7 @@ function createSet(key, member, callback) {
 }
 
 function addSetMember(key, member, callback) {
-    return self.addSetMembers(key, [member], callback);
+    return addSetMembers(key, [member], callback);
 }
 
 function isSetMember(key, member, callback){
@@ -143,12 +143,12 @@ function isSetMember(key, member, callback){
 }
 
 function addSetMembers(key, members, callback) {
-    return client.getSetMembers(key).then(function (array) {
+    return getSetMembers(key).then(function (array) {
         if(!array) array = [];
         members.forEach(function (member) {
             if(!array.contains(member)) array.push(member);
         });
-        return self.createSet(key, array, callback);
+        return createSet(key, array, callback);
     });
 }
 
@@ -167,7 +167,7 @@ function removeSetMember(key, member, callback) {
 //Options
 function expire(key, seconds, callback) {
     return new Promise(function (resolve, reject) {
-        self.exists(key).then(function (exists) {
+        exists(key).then(function (exists) {
             if(exists){
                 client.expire(key, seconds, handleReply(resolve, reject, callback));
             } else {

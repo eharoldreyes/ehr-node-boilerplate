@@ -14,7 +14,7 @@ module.exports = function () {
         email: `${firstName.toLowerCase()}_${lastName.toLowerCase()}${utils.randomInt(1, 31)}@codemagnus.com`,
         password:utils.generateWords(1) + utils.generateWords(1) + utils.generateWords(1),
         phone: "09" + utils.randomInt(10, 35) + "" + utils.randomInt(100, 999) + "" + utils.randomInt(1000, 9999),
-        birthday:`${utils.randomInt(1,31)}-${utils.randomInt(1,12)}-${utils.randomInt(1980, 2000)}}`,
-        hiredAt:`${utils.randomInt(1,31)}-${utils.randomInt(1,12)}-${utils.randomInt(1980, 2000)}}`
+        birthday:`${utils.randomInt(1,31)}-${utils.randomInt(1,12)}-${utils.randomInt(1980, 2000)}`,
+        hiredAt:`${utils.randomInt(1,31)}-${utils.randomInt(1,12)}-${utils.randomInt(1980, 2000)}`
     }
 };

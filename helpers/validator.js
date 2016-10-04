@@ -13,6 +13,7 @@ module.exports = {
     isValidDate,
     isValidQuery,
     checkRequiredFields,
+    validateFields,
     checkArrayRequiredFields,
     containsMultipleValue,
     containsSpecialChar,
@@ -111,9 +112,21 @@ function containsSpecialChar(str) {
     return false;
 }
 
+function validateFields(source, fields){
+    return new Promise((resolve, reject) => {
+        let val = checkRequiredFields(source, fields);
+        if(val.length !== 0){
+            let err = new Error("INC_DATA");
+            err.errors = val;
+            reject(err);
+        } else {
+            resolve();
+        }
+    })
+}
+
 function getData(source, sample, ref){
     return new Promise((resolve, reject) => {
-        const final = {};
         let hasError = false,
             temp;
         if (typeof sample !== typeof source || (Array.isArray(sample) !== Array.isArray(source)))
@@ -125,24 +138,29 @@ function getData(source, sample, ref){
                 return ret;
             });
             if(hasError)
-                reject(hasError)
+                reject(hasError);
             else
-                resolve(temp);
-        }
-        for (let prop in sample) {
-            if (sample.hasOwnProperty(prop)) {
-                let source_prop = prop,
-                    data;
-                if (prop[0] === '_')
-                    source_prop = prop.slice(1);
-                data = _validatePrimitiveValues(sample, prop, source, source_prop, (ref ? ref + '.' : '') + prop);
-                if (data instanceof Error)
-                    reject(data);
-                if (typeof data !== 'undefined')
-                    final[source_prop] = data;
+                reject(temp);
+        } else {
+            const final = {};
+            for (let prop in sample) {
+                if (sample.hasOwnProperty(prop)) {
+                    let source_prop = prop;
+                    let data;
+
+                    if (prop[0] === '_')
+                        source_prop = prop.slice(1);
+
+                    data = _validatePrimitiveValues(sample, prop, source, source_prop, (ref ? ref + '.' : '') + prop);
+
+                    if (data instanceof Error)
+                        return reject(data);
+                    if (typeof data !== 'undefined')
+                        final[source_prop] = data;
+                }
             }
+            resolve(final);
         }
-        resolve(final);
     });
 }
 

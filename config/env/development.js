@@ -20,13 +20,14 @@ module.exports = {
         "dialect": "mysql",
         "port": 3306,
         "logging": console.log, // or false
-        "sync": true,
+        "sync": false,
 
         //Single
         "host": "127.0.0.1",
         "username": "root",
         "password": "root"
 
+        //Replica
         //,"replication": {
         //    "write": {
         //        "host": "127.0.0.1",
@@ -45,7 +46,7 @@ module.exports = {
     REDIS: {
         host: '127.0.0.1',
         port: 6379,
-        password:"root",
+        password:"c0d3m4gnu5",
         enable_offline_queue:true,
         socket_keepalive:true
     },

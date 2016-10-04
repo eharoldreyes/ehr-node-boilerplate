@@ -20,7 +20,7 @@ module.exports = (error, req, res, next) => {
         error: true,
         message: ERROR.message || err.message,
         error_desc: err.desc,
-        error_log: err.errors, //process.env.NODE_ENV !== 'production' ||
-        error_stack: (ERROR.code === 500 || process.env.NODE_ENV !== 'production') ? err.stack : undefined
+        error_log: err.errors //process.env.NODE_ENV !== 'production' ||
+        //error_stack: (ERROR.code === 500 || process.env.NODE_ENV !== 'production') ? err.stack : undefined
     });
 };

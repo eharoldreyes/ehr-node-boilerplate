@@ -26,6 +26,7 @@
     "geolib": "^2.0.21",
     "helmet": "^2.1.2",
     "jsonwebtoken": "^7.1.9",
+    "jsonwebtoken-promisified": "^1.0.3",
     "lodash": "^4.16.1",
     "lorem-ipsum": "^1.0.3",
     "method-override": "^2.3.6",
