@@ -14,9 +14,6 @@ module.exports = (router) => {
     router.post(    "/login"					            , __.users.login);
     router.post(    "/logout"						        , $({allowAll:true}), __.users.logout);
     router.post(    "/register"					            , __.users.register);
-    //router.get(     "/verify/:token"				        , __.users.verify);
-    //router.post(    "/forgot"						        , __.users.forgotPassword);
-    //router.put(     "/password/:token"				        , __.users.resetPassword);
     //router.put(     "/change/password"				        , $({allowAll:true}), __.users.updatePassword);
 
     router.get("/test", (req, res) =>{
