@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "author": "Edgar Harold Reyes",
   "license": "MIT",
-  "description": "This a description. Wow",
+  "description": "This a description. Wow very descriptive",
   "main": "app.js",
   "private": true,
   "scripts": {

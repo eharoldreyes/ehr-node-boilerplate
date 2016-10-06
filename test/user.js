@@ -10,7 +10,7 @@ const $                 = GLOBAL.getInstance();
 const expect            = require("expect.js");
 const Promise           = require("promise");
 
-describe("Super Admin", function () {
+describe("User", function () {
     it("should register new user", function () {
         let user = User();
         this.timeout($.timeout);

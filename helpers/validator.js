@@ -120,7 +120,7 @@ function validateFields(source, fields){
             err.errors = val;
             reject(err);
         } else {
-            resolve();
+            resolve(source);
         }
     })
 }

@@ -16,28 +16,30 @@ module.exports = {
 
     MYSQL: {
         "use_env_variable":false,
-        "database": "cu_dev",
-        "dialect": "mysql",
-        "port": 3306,
         "logging": console.log, // or false
         "sync": false,
+        "dialect": "mysql",
+        "database": "iheartcdi",
 
         //Single
         "host": "127.0.0.1",
+        "port": 3306,
         "username": "root",
         "password": "root"
 
         //Replica
-        //,"replication": {
+        //"replication": {
         //    "write": {
-        //        "host": "127.0.0.1",
-        //        "username": "root",
-        //        "password": "root"
+        //        "host": "",
+        //        "port":,
+        //        "username": "",
+        //        "password": ""
         //    },"read": [
         //        {
-        //            "host": "127.0.0.1",
-        //            "username": "root",
-        //            "password": "root"
+        //            "host": "",
+        //            "port":,
+        //            "username": "",
+        //            "password": ""
         //        }
         //    ]
         //}

@@ -14,7 +14,7 @@ module.exports = (router) => {
     router.post(    "/login"					            , __.users.login);
     router.post(    "/logout"						        , $({allowAll:true}), __.users.logout);
     router.post(    "/register"					            , __.users.register);
-    //router.put(     "/change/password"				        , $({allowAll:true}), __.users.updatePassword);
+    router.put(     "/change/password"				        , $({allowAll:true}), __.users.changePassword);
 
     router.get("/test", (req, res) =>{
         res.status(200).send({error: false, message:"test"});
