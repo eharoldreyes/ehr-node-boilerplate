@@ -20,7 +20,7 @@ module.exports = (router) => {
     router.get(     "/users"				                , $({allowAll:true}), __.users.retrieveAllUsers);
     router.get(     "/user/:id"				                , $({allowAll:true}), __.users.retrieveUserById);
     router.put(     "/user/:id"				                , $({allowAll:true}), __.users.updateUser);
-    router.del(     "/user/:id"				                , $([strings.ADMIN]), __.users.deleteUser);
+    router.delete(  "/user/:id"				                , $([strings.ADMIN]), __.users.deleteUser);
 
     router.get("/test", (req, res) =>{
         res.status(200).send({error: false, message:"test"});

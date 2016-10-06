@@ -13,7 +13,7 @@ const User          = models.user;
 module.exports = {
     /**
      * @api {post} /login Login
-     * @apiDescription
+     * @apiDescription Login route for users
      * @apiGroup User
      * @apiVersion 0.0.1
      *
@@ -34,7 +34,7 @@ module.exports = {
 
     /**
      * @api {post} /logout Logout
-     * @apiDescription
+     * @apiDescription Clears session from server
      * @apiGroup User
      * @apiVersion 0.0.1
      *
@@ -48,6 +48,30 @@ module.exports = {
      * }
      **/
     logout,
+
+    /**
+     * @api {post} /register Register User
+     * @apiDescription Registers new user
+     * @apiGroup User
+     * @apiVersion 0.0.1
+     *
+     * @apiSuccess {String} email           Email of user
+     * @apiSuccess {String} password        Password of user
+     * @apiSuccess {String} firstName       First Name of user
+     * @apiSuccess {String} [middleName]    Middle Name of user
+     * @apiSuccess {String} lastName        Last Name of user
+     * @apiSuccess {String} phone           Phone Number of user
+     * @apiSuccess {String} [sss]           Social Security System Number
+     * @apiSuccess {String} [birthday]      Date of birth
+     * @apiSuccess {String} [hiredAt=NOW()] Date hired
+     *
+     * @apiSuccessExample Sample-Response:
+     * http/1.1 200 OK
+     * {
+     *      "message":"Registered",
+     *      "error": false
+     * }
+     **/
     register,
     changePassword,
     updateUser,

@@ -19,7 +19,7 @@ module.exports = {
         "logging": console.log, // or false
         "sync": false,
         "dialect": "mysql",
-        "database": "iheartcdi",
+        "database": "cu_dev",
 
         //Single
         "host": "127.0.0.1",
