@@ -25,7 +25,7 @@ module.exports = {
      * @apiSuccessExample Sample-Response:
      * http/1.1 200 OK
      * {
-     *      "message":"Success",
+     *      "message":"Logged in",
      *      "user": {
      *
      *      },
@@ -35,10 +35,11 @@ module.exports = {
     login,
     logout,
     register,
-    changePassword
-    //updateAccount
-    //retrieveById
-    //retrieveAll
+    changePassword,
+    updateUser,
+    retrieveUserById,
+    retrieveAllUsers,
+    deleteUser
 };
 
 
@@ -107,15 +108,31 @@ function changePassword(req, res, next){
         if(body.confirmPassword !== body.newPassword || user.password !== body.oldPassword)
             throw new Error(new Error("PASSWORD_MISMATCH"));
 
-        /* Clears the token from redis member */
-        return redis.removeSetMember(`jwt_${user.id}`, req.session.token);
-    }).then(function () {
-
         /* Updates the user instance password value to new password */
         return user.update({password:body.newPassword});
+    }).then(function () {
+
+        /* Clears the token from redis member */
+        return redis.removeSetMember(`jwt_${user.id}`, req.session.token);
     }).then(function () {
 
         /* Sends Response */
         res.status(200).send({error: false, message: "Updated"});
     }).catch(next);
+}
+
+function updateUser(req, res, next) {
+
+}
+
+function retrieveUserById(req, res, next) {
+
+}
+
+function retrieveAllUsers(req, res, next) {
+
+}
+
+function deleteUser(req, res, next) {
+
 }
