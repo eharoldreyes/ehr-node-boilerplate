@@ -58,6 +58,7 @@ module.exports = function (sequelize, DataTypes) {
         timestamps: true,
         classMethods: {
             associate: function (models) {
+                // READ: http://docs.sequelizejs.com/en/v3/api/associations/
                 //User.belongsTo(models.delivery, {
                 //    onDelete: "CASCADE",
                 //    as: "Delivery",
