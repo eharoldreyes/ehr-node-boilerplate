@@ -10,8 +10,7 @@ module.exports = (error, req, res, next) => {
     const err = error.toJSON();
     const ERROR = ERROR_CODES[err.name || err.message] || ERROR_CODES["INTERNAL_SERVER_ERROR"];
 
-
-    //TODO know if client error or system error(database, program)
+    //TODO categorize client error between system error(database, syntactic)
 
     if(ERROR.code === 500)
         Log.e("INTERNAL_SERVER_ERROR", err.message, err.stack);

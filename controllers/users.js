@@ -12,12 +12,10 @@ const User          = models.user;
 
 module.exports = {
     /**
-     * @api {post} /login Login User
+     * @api {post} /login Login
      * @apiDescription
      * @apiGroup User
      * @apiVersion 0.0.1
-     *
-     * @apiHeader {String} x-access-token Authentication Token
      *
      * @apiSuccess {String} email       Email of user
      * @apiSuccess {String} password    Password of user
@@ -33,6 +31,22 @@ module.exports = {
      * }
      **/
     login,
+
+    /**
+     * @api {post} /logout Logout
+     * @apiDescription
+     * @apiGroup User
+     * @apiVersion 0.0.1
+     *
+     * @apiHeader {String} x-access-token Authentication Token
+     *
+     * @apiSuccessExample Sample-Response:
+     * http/1.1 200 OK
+     * {
+     *      "message":"Logged out",
+     *      "error": false
+     * }
+     **/
     logout,
     register,
     changePassword,
@@ -106,7 +120,7 @@ function changePassword(req, res, next){
 
         /* Throws a new PASSWORD_MISMATCH error if old password doesn't match the old password */
         if(body.confirmPassword !== body.newPassword || user.password !== body.oldPassword)
-            throw new Error(new Error("PASSWORD_MISMATCH"));
+            throw new Error("PASSWORD_MISMATCH");
 
         /* Updates the user instance password value to new password */
         return user.update({password:body.newPassword});

@@ -29,7 +29,7 @@ const spawnServer   = () => {
 
     app.use('/documentation', express.static(__dirname + '/documentation'));
     app.use(routes(express.Router()));
-    app.use(require(__dirname + "/controllers/error_handler"));
+    app.use(require(__dirname + "/helpers/error_handler"));
     app.listen(config.PORT, () => {
         Log.i('Starting', `${config.APP_NAME} at Environment ${config.ENV}`);
     });
