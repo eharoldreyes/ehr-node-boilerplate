@@ -144,11 +144,14 @@ function register(req, res, next){
         "email",
         "password",
         "firstName",
+        "_middleName",
         "lastName",
         "phone",
-        "_sss"
+        "_sss",
+        "_birthday",
+        "_hiredAt"
     ]).then((newUser) => {
-        Log.d("newUser", newUser);
+
         /* Converts password to hash value */
         newUser.password = crypt.hash(newUser.password);
 
@@ -189,7 +192,25 @@ function changePassword(req, res, next){
 }
 
 function updateUser(req, res, next) {
+    /* Validates the required fields of req.body. Fields starting with _ are optional */
+    validator.validateFields(req.body, [
+        "_email",
+        "_firstName",
+        "_middleName",
+        "_lastName",
+        "_phone",
+        "_sss",
+        "_birthday",
+        "_hiredAt"
+    ]).then((newUser) => {
 
+        /* Inserts a persistent user instance to database */
+        return req.session.user.update(newUser);
+    }).then(user => {
+
+        /* Sends Response */
+        res.status(200).send({error: false, message: "Updated", user: user});
+    }).catch(next);
 }
 
 function retrieveUserById(req, res, next) {
