@@ -60,9 +60,8 @@ function checkRequiredFields(json, keys) {
     const missing = [];
     if (!json) return keys;
     keys.forEach((key) =>  {
-        if (json[key] === undefined) {
+        if (json[key] === undefined)
             missing.push(key);
-        }
     });
     return missing;
 }
@@ -114,13 +113,27 @@ function containsSpecialChar(str) {
 
 function validateFields(source, fields){
     return new Promise((resolve, reject) => {
-        let val = checkRequiredFields(source, fields);
+        const optionalFields = [];
+        fields.forEach((field, index) => {
+           if(field.startsWith("_")){
+               let f = field.substr(0, 0) + field.substr(1);
+               fields.splice(index, 1);
+               optionalFields.push(f);
+           }
+        });
+        const val = checkRequiredFields(source, fields);
         if(val.length !== 0){
             let err = new Error("INC_DATA");
             err.errors = val;
             reject(err);
         } else {
-            resolve(source);
+            const data = {};
+            const concat = fields.concat(optionalFields);
+            concat.forEach(key => {
+                if(source[key] !== undefined)
+                    data[key] = source[key];
+            });
+            resolve(data);
         }
     })
 }

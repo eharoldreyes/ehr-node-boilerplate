@@ -73,6 +73,24 @@ module.exports = {
      * }
      **/
     register,
+
+    /**
+     * @api {post} /change/password Change Password
+     * @apiDescription Updates user password
+     * @apiGroup User
+     * @apiVersion 0.0.1
+     *
+     * @apiSuccess {String} oldPassword         Old password of user
+     * @apiSuccess {String} newPassword         New password of user
+     * @apiSuccess {String} confirmPassword     Confirm password of user
+     *
+     * @apiSuccessExample Sample-Response:
+     * http/1.1 200 OK
+     * {
+     *      "message":"Updated",
+     *      "error": false
+     * }
+     **/
     changePassword,
     updateUser,
     retrieveUserById,
@@ -121,9 +139,16 @@ function logout(req, res, next){
 
 function register(req, res, next){
 
-    /* Validates the required fields of req.body */
-    validator.validateFields(req.body, ["email", "password", "firstName", "lastName", "phone"]).then((newUser) => {
-
+    /* Validates the required fields of req.body. Fields starting with _ are optional */
+    validator.validateFields(req.body, [
+        "email",
+        "password",
+        "firstName",
+        "lastName",
+        "phone",
+        "_sss"
+    ]).then((newUser) => {
+        Log.d("newUser", newUser);
         /* Converts password to hash value */
         newUser.password = crypt.hash(newUser.password);
 
@@ -140,7 +165,11 @@ function changePassword(req, res, next){
     const user = req.session.user;
 
     /* Validates the required fields of req.body */
-    validator.validateFields(req.body, ["oldPassword", "newPassword", "confirmPassword"]).then((body) => {
+    validator.validateFields(req.body, [
+        "oldPassword",
+        "newPassword",
+        "confirmPassword"
+    ]).then((body) => {
 
         /* Throws a new PASSWORD_MISMATCH error if old password doesn't match the old password */
         if(body.confirmPassword !== body.newPassword || user.password !== body.oldPassword)
