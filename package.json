@@ -9,7 +9,8 @@
   "scripts": {
     "start": "npm install && nodemon app.js",
     "test": "npm install && export NODE_ENV=development && ./node_modules/.bin/mocha --reporter spec && export NODE_ENV=development",
-    "docs": "apidoc -i controllers -o apidoc/"
+    "docs": "apidoc -i controllers -o apidoc/",
+    "forever": "forever start app.js"
   },
   "repository": {
     "type": "git",

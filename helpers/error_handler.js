@@ -7,7 +7,7 @@ module.exports = (error, req, res, next) => {
     if(!error)
         return next();
 
-    const err = error.toJSON();
+    const err = error.toJSON ? error.toJSON(): error;
     const ERROR = ERROR_CODES[err.name || err.message] || ERROR_CODES["INTERNAL_SERVER_ERROR"];
 
     //TODO categorize client error between system error(database, syntactic)

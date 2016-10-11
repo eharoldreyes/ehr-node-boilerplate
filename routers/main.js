@@ -22,15 +22,6 @@ module.exports = (router) => {
     router.put(     "/user/:id"				                , $({allowAll:true}), __.users.updateUser);
     router.delete(  "/user/:id"				                , $([strings.ADMIN]), __.users.deleteUser);
 
-    router.get("/test", (req, res) =>{
-        res.status(200).send({error: false, message:"test"});
-    });
-
-    router.get("/kill", (req, res) =>{
-        res.status(200).send({error: false, message:"Killed"});
-        process.exit(0);
-    });
-
     router.all("*", (req, res, next) =>  {
         return next(new Error("PAGE_NOT_FOUND"));
     });

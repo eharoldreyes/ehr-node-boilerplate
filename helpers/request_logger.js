@@ -3,11 +3,13 @@
  */
 'use strict';
 module.exports = (req, res, next) => {
+    let remoteIp = req.headers["x-forwarded-for"] || req.connection["remoteAddress"];
+    if(remoteIp.startsWith("::ffff:")) remoteIp = remoteIp.slice(7);
     const request = {
         url: req.params["0"],
         method:req.method,
         agent:req.get("User-Agent"),
-        address:req.headers["x-forwarded-for"] || req.connection["remoteAddress"]
+        address:remoteIp
     };
     if(Object.keys(req.params).length > 0)
         request.params = req.params;

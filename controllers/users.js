@@ -204,7 +204,7 @@ function updateUser(req, res, next) {
         "_hiredAt"
     ]).then((newUser) => {
 
-        /* Inserts a persistent user instance to database */
+        /* Update a persistent user instance in database */
         return req.session.user.update(newUser);
     }).then(user => {
 

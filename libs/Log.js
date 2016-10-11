@@ -2,43 +2,43 @@
  * Created by eharoldreyes on 9/22/16.
  */
 'use strict';
-const winston = require('winston');
+const logger = require('winston');
 const fs = require('fs');
 const path = __dirname + '/../logs/';
-const Console = winston.transports.Console;
-
-winston.addColors({
-    debug: 'white',
-    verbose: 'blue',
-    info: 'green',
-    warn: 'yellow',
-    error: 'red'
-});
-
-const logger = new winston.Logger({
-    transports: [
-        new Console({
-            name:"warn-console",
-            handleExceptions: true,
-            colorize: true,
-            level: 'warn'
-        }),
-        new Console({
-            name:"error-console",
-            handleExceptions: true,
-            colorize: true,
-            level: 'error'
-        })
-    ]
-});
-
-if(process.env.NODE_ENV !== "production"){
-    logger.add(Console, { name:"debug-console", colorize: true, level: 'debug'});
-    logger.add(Console, { name:"verbose-console", colorize: true,level: 'verbose' });
-    logger.add(Console, { name:"info-console", colorize: true,level: 'info' });
-} else {
-    logger.add(winston.transports.File, {filename: path + process.env.NODE_ENV + '-error.log', level: 'error' });
-}
+//const Console = winston.transports.Console;
+//
+//winston.addColors({
+//    debug: 'white',
+//    verbose: 'blue',
+//    info: 'green',
+//    warn: 'yellow',
+//    error: 'red'
+//});
+//
+//const logger = new winston.Logger({
+//    transports: [
+//        new Console({
+//            name:"warn-console",
+//            handleExceptions: true,
+//            colorize: true,
+//            level: 'warn'
+//        }),
+//        new Console({
+//            name:"error-console",
+//            handleExceptions: true,
+//            colorize: true,
+//            level: 'error'
+//        })
+//    ]
+//});
+//
+//if(process.env.NODE_ENV !== "production"){
+//    logger.add(Console, { name:"debug-console", colorize: true, level: 'debug'});
+//    logger.add(Console, { name:"verbose-console", colorize: true,level: 'verbose' });
+//    logger.add(Console, { name:"info-console", colorize: true,level: 'info' });
+//} else {
+//    logger.add(winston.transports.File, {filename: path + process.env.NODE_ENV + '-error.log', level: 'error' });
+//}
 
 module.exports = global.Log = {
     v, d, i, w, e,
