@@ -17,7 +17,7 @@ module.exports = {
     MYSQL: {
         "use_env_variable":false,
         "logging": console.log, // or false
-        "sync": true,
+        "sync": false,
         "dialect": "mysql",
         "database": "cu_dev",
 

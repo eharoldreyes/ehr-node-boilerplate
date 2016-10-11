@@ -94,7 +94,35 @@ module.exports = {
      * }
      **/
     changePassword,
+
+    /**
+     * @api {put} /user/:id Update Account
+     * @apiDescription Updates user account
+     * @apiGroup User
+     * @apiVersion 0.0.1
+     *
+     * @apiHeader {String} x-access-token Authentication Token
+     *
+     * @apiSuccess {String} [email]         Email of user
+     * @apiSuccess {String} [password]      Password of user
+     * @apiSuccess {String} [firstName]     First Name of user
+     * @apiSuccess {String} [middleName]    Middle Name of user
+     * @apiSuccess {String} [lastName]      Last Name of user
+     * @apiSuccess {String} [phone]         Phone Number of user
+     * @apiSuccess {String} [sss]           Social Security System Number
+     * @apiSuccess {String} [birthday]      Date of birth
+     * @apiSuccess {String} [hiredAt=NOW()] Date hired
+     *
+     * @apiSuccessExample Sample-Response:
+     * http/1.1 200 OK
+     * {
+     *      "message":"Updated",
+     *      "error": false
+     * }
+     **/
     updateUser,
+
+
     retrieveUserById,
     retrieveAllUsers,
     deleteUser
@@ -120,7 +148,7 @@ function login(req, res, next) {
             throw new Error("LOGIN_FAILED");
 
         return Auth.createToken(user).then(token => {
-            delete user.password;
+            delete user.dataValues.password;
 
             /* Sends Response */
             res.set('x-access-token', token);
@@ -151,7 +179,8 @@ function register(req, res, next){
         "phone",
         "_sss",
         "_birthday",
-        "_hiredAt"
+        "_hiredAt",
+        "_role"
     ]).then((newUser) => {
 
         /* Converts password to hash value */
@@ -217,13 +246,24 @@ function updateUser(req, res, next) {
 }
 
 function retrieveUserById(req, res, next) {
-
+    models.user.findOne({where:{id:req.params.id}}).then(function (user) {
+        delete user.dataValues.password;
+        res.status(200).send({error: false, message: "Success", user: user});
+    }).catch(next)
 }
 
 function retrieveAllUsers(req, res, next) {
-
+    models.user.findAll({attributes:{exclude:["password"]}}).then(function (users) {
+        res.status(200).send({error: false, message: "Success", users: users});
+    }).catch(next)
 }
 
 function deleteUser(req, res, next) {
-
+    models.user.destroy({where:{id:req.params.id}}).then(function (result) {
+        if(result > 0){
+            res.status(200).send({error: false, message: "Deleted"});
+        } else {
+            res.status(200).send({error: true, message: "Nothing was deleted"});
+        }
+    }).catch(next)
 }
