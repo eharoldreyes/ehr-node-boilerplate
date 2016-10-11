@@ -2,12 +2,13 @@
  * Created by eharoldreyes on 6/15/16.
  */
 'use strict';
+const config = require(__dirname + '/../config/config');
 const Promise = require("promise");
 const redis = require("redis");
 let client;
 
-module.exports = function (config) {
-    client = redis.createClient(config);
+module.exports = function (cfg) {
+    client = redis.createClient(cfg || config.REDIS);
     return {
         //Default
         set:set,

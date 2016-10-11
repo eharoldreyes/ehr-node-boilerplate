@@ -4,7 +4,7 @@
 'use strict';
 const Auth          = require(__dirname + '/../controllers/authorization');
 const validator     = require(__dirname + '/../helpers/validator');
-const redis         = require(__dirname + '/../libs/redis-helper');
+const redis         = require(__dirname + '/../libs/redis-helper')();
 const crypt         = require(__dirname + '/../libs/cryptography');
 const models        = require(__dirname + '/../models');
 const Promise       = require("promise");
@@ -75,10 +75,12 @@ module.exports = {
     register,
 
     /**
-     * @api {post} /change/password Change Password
+     * @api {put} /change/password Change Password
      * @apiDescription Updates user password
      * @apiGroup User
      * @apiVersion 0.0.1
+     *
+     * @apiHeader {String} x-access-token Authentication Token
      *
      * @apiSuccess {String} oldPassword         Old password of user
      * @apiSuccess {String} newPassword         New password of user
@@ -122,7 +124,7 @@ function login(req, res, next) {
 
             /* Sends Response */
             res.set('x-access-token', token);
-            res.status(200).send({error: false, message: "Logged in", user: user});
+            res.status(200).send({error: false, message: "Logged in", user: user, token: token});
         });
     }).catch(next);
 }
@@ -160,6 +162,7 @@ function register(req, res, next){
     }).then(user => {
 
         /* Sends Response */
+        delete user.dataValues.password;
         res.status(200).send({error: false, message: "Registered", user: user});
     }).catch(next);
 }
@@ -175,11 +178,11 @@ function changePassword(req, res, next){
     ]).then((body) => {
 
         /* Throws a new PASSWORD_MISMATCH error if old password doesn't match the old password */
-        if(body.confirmPassword !== body.newPassword || user.password !== body.oldPassword)
+        if(body.confirmPassword !== body.newPassword || user.password !== crypt.hash(body.oldPassword))
             throw new Error("PASSWORD_MISMATCH");
 
         /* Updates the user instance password value to new password */
-        return user.update({password:body.newPassword});
+        return user.update({password:crypt.hash(body.newPassword)});
     }).then(function () {
 
         /* Clears the token from redis member */

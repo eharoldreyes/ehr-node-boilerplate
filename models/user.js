@@ -53,6 +53,11 @@ module.exports = function (sequelize, DataTypes) {
         hiredAt: {
             type: DataTypes.DATE,
             allowNull: true
+        },
+        role: {
+            type: DataTypes.ENUM("Admin","Programmer"),
+            defaultValue: "Programmer",
+            allowNull: false
         }
     }, {
         timestamps: true,
