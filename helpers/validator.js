@@ -113,22 +113,26 @@ function containsSpecialChar(str) {
 
 function validateFields(source, fields){
     return new Promise((resolve, reject) => {
-        const optionalFields = [];
-        fields.forEach((field, index) => {
+        const optionalFields = [],
+            requiredFields = [];
+
+        fields.forEach((field) => {
            if(field.startsWith("_")){
-               let f = field.substr(0, 0) + field.substr(1);
-               fields.splice(index, 1);
-               optionalFields.push(f);
+               optionalFields.push(field.substr(0, 0) + field.substr(1));
+           } else {
+               requiredFields.push(field);
            }
         });
-        const val = checkRequiredFields(source, fields);
+
+        const val = checkRequiredFields(source, requiredFields);
+
         if(val.length !== 0){
             let err = new Error("INC_DATA");
             err.errors = val;
             reject(err);
         } else {
             const data = {};
-            const concat = fields.concat(optionalFields);
+            const concat = requiredFields.concat(optionalFields);
             concat.forEach(key => {
                 if(source[key] !== undefined)
                     data[key] = source[key];
