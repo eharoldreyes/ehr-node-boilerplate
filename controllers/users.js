@@ -103,6 +103,8 @@ module.exports = {
      *
      * @apiHeader {String} x-access-token Authentication Token
      *
+     * @apiParam {String} id User unique id
+     *
      * @apiSuccess {String} [email]         Email of user
      * @apiSuccess {String} [password]      Password of user
      * @apiSuccess {String} [firstName]     First Name of user
@@ -122,9 +124,66 @@ module.exports = {
      **/
     updateUser,
 
-
+    /**
+     * @api {get} /user/:id Get Account
+     * @apiDescription Retrieves user account
+     * @apiGroup User
+     * @apiVersion 0.0.1
+     *
+     * @apiHeader {String} x-access-token Authentication Token
+     *
+     * @apiParam {String} id User unique id
+     *
+     * @apiSuccessExample Sample-Response:
+     * http/1.1 200 OK
+     * {
+     *      "message":"Success",
+     *      "error": false,
+     *      "user":{
+     *      }
+     * }
+     **/
     retrieveUserById,
+
+    /**
+     * @api {get} /users Get Accounts
+     * @apiDescription Retrieves user accounts
+     * @apiGroup User
+     * @apiVersion 0.0.1
+     *
+     * @apiHeader {String} x-access-token Authentication Token
+     *
+     * @apiSuccessExample Sample-Response:
+     * http/1.1 200 OK
+     * {
+     *      "message":"Success",
+     *      "error": false,
+     *      "users":[
+     *          {}
+     *      ]
+     *
+     * }
+     **/
     retrieveAllUsers,
+
+    /**
+     * @api {delete} /user/:id Delete Account
+     * @apiDescription Deletes user account
+     * @apiGroup User
+     * @apiVersion 0.0.1
+     *
+     * @apiHeader {String} x-access-token Authentication Token
+     *
+     * @apiParam {String} id User unique id
+     *
+     * @apiSuccessExample Sample-Response:
+     * http/1.1 200 OK
+     * {
+     *      "message":"Deleted",
+     *      "error": false
+     *
+     * }
+     **/
     deleteUser
 };
 
