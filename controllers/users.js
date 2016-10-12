@@ -14,7 +14,7 @@ module.exports = {
     /**
      * @api {post} /login Login
      * @apiDescription Login route for users
-     * @apiGroup User
+     * @apiGroup Auth
      * @apiVersion 0.0.1
      *
      * @apiSuccess {String} email       Email of user
@@ -35,7 +35,7 @@ module.exports = {
     /**
      * @api {post} /logout Logout
      * @apiDescription Clears session from server
-     * @apiGroup User
+     * @apiGroup Auth
      * @apiVersion 0.0.1
      *
      * @apiHeader {String} x-access-token Authentication Token
@@ -52,7 +52,7 @@ module.exports = {
     /**
      * @api {post} /register Register User
      * @apiDescription Registers new user
-     * @apiGroup User
+     * @apiGroup Auth
      * @apiVersion 0.0.1
      *
      * @apiSuccess {String} email           Email of user
@@ -77,7 +77,7 @@ module.exports = {
     /**
      * @api {put} /change/password Change Password
      * @apiDescription Updates user password
-     * @apiGroup User
+     * @apiGroup Auth
      * @apiVersion 0.0.1
      *
      * @apiHeader {String} x-access-token Authentication Token
