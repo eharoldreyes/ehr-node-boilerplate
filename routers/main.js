@@ -3,16 +3,18 @@
  */
 'use strict';
 
+const decodeBody    = require(__dirname + '/../helpers/multipart_decoder');
 const logRequest    = require(__dirname + '/../helpers/request_logger');
-const __            = require(__dirname + '/../controllers');
+//const upload        = require('multer')();
 const upload        = require(__dirname + '/../libs/multer');
+const __            = require(__dirname + '/../controllers');
 const strings       = require(__dirname + '/../res/values/strings');
 const $             = __.authorization.authorize;
 
 module.exports = (router) => {
     router.all(		"*"								        , logRequest);
 
-    router.post(    "/register"					            , __.users.register);
+    router.post(    "/register"					            , upload.single('profile'), decodeBody, __.users.register);
     router.post(    "/login"					            , __.users.login);
     router.post(    "/logout"						        , $({allowAll:true}), __.users.logout);
     router.put(     "/change/password"				        , $({allowAll:true}), __.users.changePassword);

@@ -6,8 +6,10 @@ const Auth          = require(__dirname + '/../controllers/authorization');
 const validator     = require(__dirname + '/../helpers/validator');
 const redis         = require(__dirname + '/../libs/redis-helper')();
 const crypt         = require(__dirname + '/../libs/cryptography');
+const config        = require(__dirname + '/../config/config');
 const models        = require(__dirname + '/../models');
 const Promise       = require("promise");
+const path          = require('path');
 const User          = models.user;
 
 module.exports = {
@@ -228,20 +230,34 @@ function logout(req, res, next){
 
 function register(req, res, next){
 
-    /* Validates the required fields of req.body. Fields starting with _ are optional */
-    validator.validateFields(req.body, [
-        "email",
-        "password",
-        "firstName",
-        "_middleName",
-        "lastName",
-        "phone",
-        "_sss",
-        "_birthday",
-        "_hiredAt",
-        "_role"
-    ]).then((newUser) => {
+    const s3         = require(__dirname + '/../libs/s3_helper')(config.AWS.s3);
 
+    if(!req.file)
+        return next(new Error("MISSING_PROFILE_PIC"));
+
+    const key = `profile/${new Date().getTime()}${path.extname(req.file.originalname)}`;
+
+    s3.upload(req.file, key).then(function (result) {
+
+        console.log(result);
+        req.body.profilePic = result.Location;
+
+        /* Validates the required fields of req.body. Fields starting with _ are optional */
+        return validator.validateFields(req.body, [
+            "email",
+            "password",
+            "firstName",
+            "_middleName",
+            "lastName",
+            "phone",
+            "_sss",
+            "_birthday",
+            "_hiredAt",
+            "_role",
+            "profilePic"
+        ]);
+    }).then((newUser) => {
+        console.log(newUser);
         /* Converts password to hash value */
         newUser.password = crypt.hash(newUser.password);
 

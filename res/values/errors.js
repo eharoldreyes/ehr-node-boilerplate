@@ -14,6 +14,10 @@ module.exports = {
         code: 404,
         message: 'Page not found'
     },
+    MISSING_PROFILE_PIC: {
+        code: 403,
+        message: 'Missing profile picture file'
+    },
     INV_SLEN: {
         code: 400,
         message: 'String is too short or too long'
